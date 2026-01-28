@@ -15,7 +15,7 @@ AcquiredCompetencies (Kompetencat që përfitojnë)
 Week (Java)
 
 ## Json Schema
-`json
+```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "DiaryEntry",
@@ -26,94 +26,83 @@ Week (Java)
       "items": {
         "type": "object",
         "properties": {
-          "Field Name": { "type": "string" },
-          "Albanian Translation": { "type": "string" },
+          "Albanian Field Name": { "type": "string" },
           "Content": {
             "type": "array",
             "items": { "type": "string" }
           }
         },
-        "required": ["Field Name", "Albanian Translation", "Content"]
+        "required": ["Albanian Field Name", "Content"]
       }
     }
   },
   "required": ["DiaryEntry"]
 }
-`
+```
 
 ## Example Json Entry
-`json
+```json
 {
   "DiaryEntry": [
     {
-      "Field Name": "Number",
-      "Albanian Translation": "Nr",
+      "Albanian Field Name": "Nr",
       "Content": ["1"]
     },
     {
-      "Field Name": "Topic",
-      "Albanian Translation": "Tema",
+      "Albanian Field Name": "Tema",
       "Content": ["Introduction to Database Normalization"]
     },
     {
-      "Field Name": "Homework",
-      "Albanian Translation": "Detyra Shtepie",
+      "Albanian Field Name": "Detyra Shtepie",
       "Content": ["Complete exercises 1 through 5 on page 42"]
     },
     {
-      "Field Name": "DiaryPage",
-      "Albanian Translation": "Fq Ditari",
+      "Albanian Field Name": "Fq Ditari",
       "Content": ["12"]
     },
     {
-      "Field Name": "LearningSituation",
-      "Albanian Translation": "Situata e të nxënit",
+      "Albanian Field Name": "Situata e të nxënit",
       "Content": ["Analyzing a messy spreadsheet to identify redundancies."]
     },
     {
-      "Field Name": "MethodologyAndActivities",
-      "Albanian Translation": "Metodologjia dhe veprimtaritë e nxënësve",
+      "Albanian Field Name": "Metodologjia dhe veprimtaritë e nxënësve",
       "Content": ["Brainstorming, Group Discussion, Practical Lab Work"]
     },
     {
-      "Field Name": "Assessment",
-      "Albanian Translation": "Vlerësimi",
+      "Albanian Field Name": "Vlerësimi",
       "Content": ["Observation of group participation and accuracy of the logic model."]
     },
     {
-      "Field Name": "Resources",
-      "Albanian Translation": "Burimet",
+      "Albanian Field Name": "Burimet",
       "Content": ["Textbook, SQL Server Management Studio, Projector"]
     },
     {
-      "Field Name": "KeyCompetencyResults",
-      "Albanian Translation": "Rezultatet e të nxënit sipas kompetencave kyç",
+      "Albanian Field Name": "Rezultatet e të nxënit sipas kompetencave kyç",
       "Content": ["Student identifies data anomalies and applies 1NF, 2NF, and 3NF."]
     },
     {
-      "Field Name": "Keywords",
-      "Albanian Translation": "Fjalët kyç",
+      "Albanian Field Name": "Fjalët kyç",
       "Content": ["Primary Key, Foreign Key, Normalization, Dependency"]
     },
     {
-      "Field Name": "InterdisciplinaryLinks",
-      "Albanian Translation": "Lidhja me fusha të tjera ose me temat ndërkurrikulare",
+      "Albanian Field Name": "Lidhja me fusha të tjera ose me temat ndërkurrikulare",
       "Content": ["Mathematics (Set Theory), English (Technical Terminology)"]
     },
     {
-      "Field Name": "LessonOrganization",
-      "Albanian Translation": "Organizimi i orës së mësimit",
+      "Albanian Field Name": "Organizimi i orës së mësimit",
       "Content": ["10 min Intro, 25 min Lab, 10 min Reflection"]
     },
     {
-      "Field Name": "AcquiredCompetencies",
-      "Albanian Translation": "Kompetencat që përfitojnë",
+      "Albanian Field Name": "Kompetencat që përfitojnë",
       "Content": ["Problem solving, Logical thinking, Digital literacy"]
     },
     {
-      "Field Name": "Week",
-      "Albanian Translation": "Java",
+      "Albanian Field Name": "Java",
+      "Content": ["3"]
+    },
+    {
+      "Albanian Field Name": "Java",
       "Content": ["3"]
     }
   ]
-}`
+}```
