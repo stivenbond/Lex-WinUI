@@ -31,10 +31,11 @@ public class Lesson
     public string? Title { get; set; }
     public List<ContentBlock>? LessonContents { get; set; }
     
-    public int? DiaryEntryId { get; set; }
     public DiaryEntry? DiaryEntry { get; set; }
     
 }
+
+//TODO encapsulate content blocklist in one prperty of a new class
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName =  "Type")]
 [JsonDerivedType(typeof(TextBlock),typeDiscriminator: (int)BlockType.Text)]
