@@ -18,4 +18,9 @@ public class DataContext : DbContext
     
     //TODO Find source of DBContextOptionsBuilder
     protected override void OnConfiguring(DBContextOptionsBuilder options) => options.UseSqlite($"Data Source={DbPath}");
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Automatically finds every class that implements IEntityTypeConfiguration
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(MyDbContext).Assembly);
+    }
 }
