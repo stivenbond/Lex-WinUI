@@ -19,13 +19,22 @@ public class DataContext : DbContext
     public string DbPath;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DataContext"/> class, setting the database path to the local application data folder.
+    /// Initializes a new instance of the <see cref="DataContext"/> class using defaults.
     /// </summary>
     public DataContext()
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = System.IO.Path.Join(path, "lex.db");
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataContext"/> class using a provided configuration service.
+    /// </summary>
+    /// <param name="configService">The configuration service to retrieve the DB path from.</param>
+    public DataContext(IConfigurationService configService)
+    {
+        DbPath = configService.Load().DatabasePath;
     }
     
     /// <summary>
