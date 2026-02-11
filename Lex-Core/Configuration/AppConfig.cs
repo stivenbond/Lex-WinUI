@@ -3,6 +3,10 @@ namespace Lex_Core.Configuration;
 /// <summary>
 /// Represents the persistent user configuration for the Lex application.
 /// </summary>
+/// <remarks>
+/// This configuration is typically serialized to a JSON file in the local application data folder. 
+/// It includes paths and behavioral settings that persist across application sessions.
+/// </remarks>
 public class AppConfig
 {
     /// <summary>

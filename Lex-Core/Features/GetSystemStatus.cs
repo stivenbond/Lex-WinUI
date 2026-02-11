@@ -5,11 +5,17 @@ namespace Lex_Core.Features;
 /// <summary>
 /// A simple query to check the system status and verify MediatR integration.
 /// </summary>
+/// <remarks>
+/// This query serves as a diagnostics tool to ensure that the mediator pipeline is correctly configured and that the core assembly is accessible.
+/// </remarks>
 public record GetSystemStatusQuery : IRequest<string>;
 
 /// <summary>
-/// Handler for the <see cref="GetSystemStatusQuery"/>.
+/// The message handler for the <see cref="GetSystemStatusQuery"/>.
 /// </summary>
+/// <remarks>
+/// This handler returns a standard operational message to indicate success.
+/// </remarks>
 public class GetSystemStatusHandler : IRequestHandler<GetSystemStatusQuery, string>
 {
     /// <inheritdoc />

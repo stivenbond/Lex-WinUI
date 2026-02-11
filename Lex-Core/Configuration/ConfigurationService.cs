@@ -21,13 +21,28 @@ public interface IConfigurationService
 
 /// <summary>
 /// Service implementation for managing application configuration stored as JSON.
-/// Supports MSIX-style read-only defaults and writable user settings.
 /// </summary>
+/// <remarks>
+/// This service handles the loading and saving of <see cref="AppConfig"/>. 
+/// It implements a fallback mechanism to support MSIX-style read-only defaults in the installation directory 
+/// and writable user-specific settings in the local application data folder.
+/// </remarks>
 public class ConfigurationService : IConfigurationService
 {
+    /// <summary>
+    /// The absolute path to the writeable user-specific configuration file.
+    /// </summary>
     private readonly string _configPath;
+
+    /// <summary>
+    /// The absolute path to the read-only default configuration file provided at installation.
+    /// </summary>
     private readonly string _defaultConfigPath;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConfigurationService"/> class.
+    /// Sets up the paths for the user-specific and default configuration files and ensures the user-specific directory exists.
+    /// </summary>
     public ConfigurationService()
     {
         // Path in LocalAppData for writable settings
@@ -88,6 +103,10 @@ public class ConfigurationService : IConfigurationService
         File.WriteAllText(_configPath, json);
     }
 
+    /// <summary>
+    /// Creates a new <see cref="AppConfig"/> instance with hardcoded default values.
+    /// </summary>
+    /// <returns>A new <see cref="AppConfig"/> instance containing the application defaults.</returns>
     private AppConfig CreateDefaultConfig()
     {
         var localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
