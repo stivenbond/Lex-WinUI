@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Lex_Core.Configuration;
 using Lex_Core.Data;
+using Lex_Core;
 
 namespace Lex_Core.Common;
 
@@ -27,7 +28,7 @@ public static class ServiceCollectionExtensions
         // 3. Register MediatR
         // Scans the current assembly (Lex-Core) for Handlers, Behaviors, and Validators.
         services.AddMediatR(cfg => {
-            cfg.RegisterServicesFromAssembly(typeof(CoreMarker).Assembly);
+            cfg.RegisterServicesFromAssembly(CoreMarker.Assembly);
         });
 
         return services;

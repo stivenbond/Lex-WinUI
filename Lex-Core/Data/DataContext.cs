@@ -2,6 +2,9 @@
 using System.IO;
 using System.Collections.Generic;
 using Lex_Core.Models;
+using Lex_Core.Configuration;
+
+namespace Lex_Core.Data;
 
 /// <summary>
 /// The primary database context for the Lex application, managing the lifecycle of entity models.

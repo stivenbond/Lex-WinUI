@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json.Serialization;
-using ABI.Microsoft.UI.Xaml.Documents;
 
 namespace Lex_Core.Models;
 
@@ -77,6 +76,7 @@ public class Lesson
     /// Gets or sets the title of the lesson.
     /// </summary>
     public string? Title { get; set; }
+    
 
     /// <summary>
     /// Gets or sets the collection of content blocks that make up the lesson.
@@ -102,6 +102,21 @@ public class Lesson
     /// Gets or sets the diary entry that holds additional metadata for this lesson.
     /// </summary>
     public DiaryEntry DiaryEntry { get; set; }
+
+    /// <summary>
+    /// Gets or sets the foreign key for the next lesson to be taught.
+    /// </summary>
+    public int? NextLessonId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the next lesson to be taught after this one.
+    /// </summary>
+    public Lesson? NextLesson { get; set; }
+
+    /// <summary>
+    /// Gets or sets the previous lesson that leads to this one.
+    /// </summary>
+    public Lesson? PreviousLesson { get; set; }
 }
 
 /// <summary>
@@ -179,6 +194,12 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
         builder.HasOne(x => x.DiaryEntry)
             .WithOne(d => d.Lesson)
             .HasForeignKey<Lesson>(x => x.DiaryEntryId);
+
+        // Next Lesson Self-Referencing Relationship (1-to-1)
+        builder.HasOne(x => x.NextLesson)
+            .WithOne(x => x.PreviousLesson)
+            .HasForeignKey<Lesson>(x => x.NextLessonId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.OwnsOne(x => x.LessonContents, configBuilder =>
         {

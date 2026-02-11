@@ -14,7 +14,11 @@ using Microsoft.UI.Xaml.Shapes;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
+using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Microsoft.Extensions.DependencyInjection;
+using Lex.ViewModels;
+using Lex_Core.Common;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,12 +33,40 @@ namespace Lex
         private Window? _window;
 
         /// <summary>
+        /// Gets the current <see cref="App"/> instance in use.
+        /// </summary>
+        public new static App Current => (App)Application.Current;
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; }
+
+        /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
             InitializeComponent();
+
+            Services = ConfigureServices();
+        }
+
+        /// <summary>
+        /// Configures the services for the application.
+        /// </summary>
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            // Register ViewModels
+            services.AddTransient<ViewModels.MainViewModel>();
+
+            // Register Lex-Core Services (Data, Config, MediatR)
+            services.AddLexCore();
+
+            return services.BuildServiceProvider();
         }
 
         /// <summary>
