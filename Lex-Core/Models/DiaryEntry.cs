@@ -9,12 +9,16 @@ public class DiaryEntry
     public int Id { get; set; }
 
     //Foreign Keys
-    public int LessonId {get; set;}
-    public int PrincipalCohortId {get;set;}
+    public int LessonId { get; set; }
+    public int SubjectId { get; set; }
+    public int PrincipalCohortId { get; set; }
 
-    //TODO Navigation Properties (check virtual constraint reason)
-    public Lesson Lesson { get; set; } // Lesson Foreign Key
-    public Cohort? PrincipalCohort { get; set; } //Principal Cohort Foreign Key to store the first class that is taught a lesson
+    //Navigation Properties
+    public Lesson Lesson { get; set; }
+    public Subject Subject { get; set; }
+    public Cohort PrincipalCohort { get; set; }
+
+    public ICollection<Cohort> OtherCohorts { get; set; } = new List<Cohort>();
 
     //Content as JSON
     public DiaryEntryContent? Content { get; set; }
@@ -39,16 +43,25 @@ public class DiaryEntryConfiguration : IEntityTypeConfiguration<DiaryEntry>
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
 
-        //Lesson FK Relationship
+        //Lesson Relationship (1-to-1)
         builder.HasOne(x => x.Lesson)
             .WithOne(l => l.DiaryEntry)
-            .HasForeignKey(x => x.LessonId);
+            .HasPrincipalKey<DiaryEntry>(x => x.Id);
 
-        //Principal Cohort FK Relationship
+        //Subject Relationship
+        builder.HasOne(x => x.Subject)
+            .WithMany()
+            .HasForeignKey(x => x.SubjectId);
+
+        //Principal Cohort Relationship
         builder.HasOne(x => x.PrincipalCohort)
             .WithMany(c => c.PrincipalCohortDiaryEntries)
             .HasForeignKey(x => x.PrincipalCohortId);
-        
+
+        //Other Cohorts Relationship (Many-to-Many)
+        builder.HasMany(x => x.OtherCohorts)
+            .WithMany(c => c.OtherDiaryEntries); 
+
         builder.Property(x => x.Content).IsRequired();
         builder.OwnsOne(x => x.Content, configBuilder =>
         {

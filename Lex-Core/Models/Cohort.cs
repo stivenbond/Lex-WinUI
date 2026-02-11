@@ -9,21 +9,18 @@ public class Cohort
     public int Year { get; set; }
     public int Index { get; set; }
 
-    public ICollection<DiaryEntry> PrincipalCohortDiaryEntries { get; set; }
-    
+    public ICollection<DiaryEntry> PrincipalCohortDiaryEntries { get; set; } = new List<DiaryEntry>();
+    public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+    public ICollection<DiaryEntry> OtherDiaryEntries { get; set; } = new List<DiaryEntry>();
 }
 
-public class DiaryEntryConfiguration : IEntityTypeConfiguration<DiaryEntry>
+public class CohortConfiguration : IEntityTypeConfiguration<Cohort>
 {
-    public void Configure(EntityTypeBuilder<DiaryEntry> builder)
-    {/* FOR REFERENCE   
+    public void Configure(EntityTypeBuilder<Cohort> builder)
+    {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-        builder.Property(x => x.LessonId).IsRequired(); //TODO Add it as a foreign key
-        builder.Property(x => x.Content).IsRequired();
-        builder.OwnsOne(x => x.Content, configBuilder =>
-        {
-            configBuilder.ToJson();
-        });*/
+        builder.Property(x => x.Index).IsRequired();
+        builder.Property(x => x.Year).IsRequired();
     }
 }

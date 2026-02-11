@@ -30,12 +30,13 @@ public class Lesson
     public int Id { get; set; }
     public string? Title { get; set; }
     public List<ContentBlock>? LessonContents { get; set; }
-    
-    public DiaryEntry? DiaryEntry { get; set; }
-    
-}
 
-//TODO encapsulate content blocklist in one prperty of a new class
+    public int SubjectId { get; set; }
+    public Subject Subject { get; set; }
+    
+    public int DiaryEntryId { get; set; }
+    public DiaryEntry DiaryEntry { get; set; }
+}
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName =  "Type")]
 [JsonDerivedType(typeof(TextBlock),typeDiscriminator: (int)BlockType.Text)]
@@ -55,7 +56,7 @@ public class TextBlock : ContentBlock
 public class AttachmentBlock : ContentBlock
 {
     public AttachmentType Kind { get; set; }
-    public string? Uri { get; set; }
+    public int AttachmentId { get; set; }
 }
 
 public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
@@ -64,9 +65,19 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-        builder.Property(x => x.DiaryEntryId).IsRequired(); //TODO Add it as a foreign key
-        builder.Property(x => x.Content).IsRequired();
-        builder.OwnsOne(x => x.Content, configBuilder =>
+        builder.Property(x => x.Title).IsRequired();
+
+        // Subject Relationship
+        builder.HasOne(x => x.Subject)
+            .WithMany(s => s.Lessons)
+            .HasForeignKey(x => x.SubjectId);
+
+        // DiaryEntry Relationship (1-to-1)
+        builder.HasOne(x => x.DiaryEntry)
+            .WithOne(d => d.Lesson)
+            .HasForeignKey<Lesson>(x => x.DiaryEntryId);
+
+        builder.OwnsOne(x => x.LessonContents, configBuilder =>
         {
             configBuilder.ToJson();
         });
