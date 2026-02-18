@@ -6,5 +6,7 @@
   - in the case of powerpoints the slides are imported as lesson content blocks and would follow the same logic as Word documents, where a word document could be imported and split into multiple lessons.
   - in the case of an excel file the user shouldchoose how the data that is being importing willbe mapped to the db schema, usually a JSON one.
 - the user should be shown a preview of how a file would be imported and should be given the possibility of changing the data in the preview before confirming.
+### Parsing logic
+- the original documents are parsed into html via the mammoth library and then rganised in the Lex database schema with content blocks and their corresponding metadata.
 ## Attachments
 - imported attachments should be marked by type based on the file extention and then stored as blobs in the database. if the attachment is more than 5MB in size, the path of the attachment will be stored as a URI in the database and the user should be warned that the attachment should not be moved, because the linking might break.
